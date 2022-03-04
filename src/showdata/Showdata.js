@@ -10,6 +10,7 @@ export default class Showdata extends Component{
         super();
         this.state ={
             list:[],
+            timestamp:"",
             idkey:"",
             firstname:"",
             lastname:""
@@ -54,6 +55,7 @@ export default class Showdata extends Component{
     call=(user)=>{
         this.openModal();
         this.setState({
+            timestamp:user.state.timestamp,
             idkey:user.id,
             firstname:user.firstname,
             lastname:user.lastname
@@ -75,6 +77,7 @@ export default class Showdata extends Component{
     handleClicked(){
         let url = `https://localhost:3000/data`;
         let data = {
+            timestamp:this.state.timestamp,
             idkey:this.state.idkey,
             firstname:this.state.firstname,
             lastname:this.state.lastname
@@ -99,18 +102,22 @@ export default class Showdata extends Component{
                     <table className="table table-dark">
                         <thead>
                             <tr>
+                            <th>timestamp</th>
                             <th>ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>email</th>
                             </tr>
                         </thead>
                         <tbody>
                                 {list.map((user) =>{
                                     return(
                                         <tr>
+                                            <th>{user.timestamp}</th>
                                             <td>{user.id}</td>
                                             <td>{user.firstname}</td>
                                             <td>{user.lastname}</td>
+                                            <th>{user.email}</th>
                                             <td><button type="button" class="btn btn-warning" onClick={()=>this.call(user)}>Edit</button></td>
                                             <td><button type="button" class="btn btn-danger"  onClick={()=>this.onDelete(user)}>Delete</button></td>
                                             <div className="box">
@@ -121,6 +128,9 @@ export default class Showdata extends Component{
                                                        onClickAway={() => this.closeModal()}
                                                 >
                                                     <form className="container" id='form'>
+                                                    <div className="form-group">
+                                                        <h3><label htmlFor="id">TimeStamp: {this.state.timestamp}<br/></label></h3>
+                                                        </div>
                                                         <div className="form-group">
                                                             <h3><label htmlFor="id">ID: {this.state.idkey}<br/></label></h3>
                                                         </div>
